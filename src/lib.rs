@@ -105,182 +105,41 @@ mod tests {
         .unwrap();
         let latest_tags = vec!["latest"];
 
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.0.1").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.0.1"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.0.2").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.0.2"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.0.3").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.0.3"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.1.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.1.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.1.1").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.1.1", "0.1"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.1.2").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.1.2", "0.1"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.2.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.2.0", "0.2"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("0.3.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["0.3.0", "0.3"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.0.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.0.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.0.1").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.0.1", "1.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.0.2").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.0.2", "1.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.1.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.1.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.1.1").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.1.1", "1.1", "1"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.1.2").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.1.2", "1.1", "1"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("1.2.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["1.2.0", "1.2", "1"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("2.0.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["2.0.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("2.0.1").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["2.0.1", "2.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("2.1.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["2.1.0"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("2.1.1").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["2.1.1", "2.1", "2", "latest"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("2.1.2").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["2.1.2", "2.1", "2", "latest"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("2.2.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["2.2.0", "2.2", "2", "latest"]
-        );
-        assert_eq!(
-            gen_semver_tags(
-                Version::parse("3.0.0").unwrap(),
-                &existing_versions,
-                &latest_tags
-            ),
-            vec!["3.0.0", "3.0", "3", "latest"]
-        );
+        for (version, expected_tags) in [
+            ("0.0.1", vec!["0.0.1"]),
+            ("0.0.2", vec!["0.0.2"]),
+            ("0.0.3", vec!["0.0.3"]),
+            ("0.1.0", vec!["0.1.0"]),
+            ("0.1.1", vec!["0.1.1", "0.1"]),
+            ("0.1.2", vec!["0.1.2", "0.1"]),
+            ("0.2.0", vec!["0.2.0", "0.2"]),
+            ("0.3.0", vec!["0.3.0", "0.3"]),
+            ("1.0.0", vec!["1.0.0"]),
+            ("1.0.1", vec!["1.0.1", "1.0"]),
+            ("1.0.2", vec!["1.0.2", "1.0"]),
+            ("1.1.0", vec!["1.1.0"]),
+            ("1.1.1", vec!["1.1.1", "1.1", "1"]),
+            ("1.1.2", vec!["1.1.2", "1.1", "1"]),
+            ("1.2.0", vec!["1.2.0", "1.2", "1"]),
+            ("2.0.0", vec!["2.0.0"]),
+            ("2.0.1", vec!["2.0.1", "2.0"]),
+            ("2.1.0", vec!["2.1.0"]),
+            ("2.1.1", vec!["2.1.1", "2.1", "2", "latest"]),
+            ("2.1.2", vec!["2.1.2", "2.1", "2", "latest"]),
+            ("2.2.0", vec!["2.2.0", "2.2", "2", "latest"]),
+            ("3.0.0", vec!["3.0.0", "3.0", "3", "latest"]),
+        ] {
+            assert_eq!(
+                gen_semver_tags(
+                    Version::parse(version).unwrap(),
+                    &existing_versions,
+                    &latest_tags
+                ),
+                expected_tags,
+                "for version {}",
+                version
+            );
+        }
     }
 
     // TODO test with pre-release versions
