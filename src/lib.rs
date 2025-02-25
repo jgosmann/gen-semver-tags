@@ -1,3 +1,4 @@
+//! Methods to generate tags for semantic versions.
 pub use semver::Version;
 use semver::{BuildMetadata, Comparator, Op, Prerelease, VersionReq};
 use std::borrow::Cow;
@@ -18,6 +19,20 @@ const FIRST_MAJOR_RELEASE: Version = Version {
     build: BuildMetadata::EMPTY,
 };
 
+/// Generate a list of semantic versioning tags for a given version.
+///
+/// Given a `for_version` and already `existing_versions`, a list of tags following
+/// [Semantic Versioning](https://semver.org/) is generated. For a version `major.minor.patch`,
+/// `major.minor.patch` will always be included. If the version, is the latest minor version of
+/// the given major version, `major.minor` will be included. If the version is the latest major
+/// version, `major` and the `latest_tags` will be included.
+///
+/// This tags can be used, for example, to tag Docker images, such that by using just a major
+/// (or minor) version, the latest image of that major (or minor) version is pulled.
+///
+/// Pre-release versions are never considered to be the latest version.
+///
+/// Build metadata is ignored.
 pub fn gen_semver_tags<'a>(
     for_version: Version,
     existing_versions: &[Version],
