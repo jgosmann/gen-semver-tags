@@ -1,0 +1,14 @@
+bin.name = "gen-semver-tags"
+args = "1.2.3"
+stdin = """
+1.0.0
+foo
+2.0.0
+"""
+stderr = """
+Error: Failed to parse version 'foo'
+
+Caused by:
+    unexpected character 'f' while parsing major version number
+"""
+status.code = 1
