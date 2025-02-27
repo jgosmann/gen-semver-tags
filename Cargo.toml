@@ -2,6 +2,11 @@
 name = "gen-semver-tags"
 version = "0.1.0-pre.0"
 edition = "2021"
+authors = ["Jan Gosmann"]
+description = "Generate a set of SemVer tags, e.g. to tag container images."
+repository = "https://github.com/jgosmann/gen-semver-tags"
+license = "MIT OR Apache-2.0"
+keywords = ["semver", "tags", "container", "image", "version"]
 
 [features]
 default = ["bin"]
