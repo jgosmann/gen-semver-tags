@@ -1,6 +1,6 @@
 [package]
 name = "gen-semver-tags"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Jan Gosmann"]
 description = "Generate a set of SemVer tags, e.g. to tag container images."
